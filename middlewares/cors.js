@@ -1,6 +1,10 @@
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
 const domain = [
+  'https://owe6x.nomoredomains.xyz',
+  'http://owe6x.nomoredomains.xyz',
+  'https://owex.nomoredomains.xyz',
+  'http://owex.nomoredomains.xyz',
   'http://localhost:3000',
   'https://localhost:3000',
 ];
