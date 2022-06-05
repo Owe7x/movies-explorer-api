@@ -1,0 +1,39 @@
+GET http://localhost:3000/me
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/signin
+Content-Type: application/json
+
+{
+  "email": "tengia@mail.ru",
+  "password": "1234"
+}
+
+###
+
+PATCH  http://localhost:3000/users/me
+Content-Type: application/json
+
+  {
+    "_id": "6250876c4a92cdc319444c79",
+    "name": "Tимур",
+    "about": "Me about",
+    "avatar": "https://www.zvezdi.rasdasd6334_mjettju-makkonahi-34.jpg",
+    "__v": 0
+  }
+
+###
+
+DELETE  http://localhost:3000/cards/text/likes
+Content-Type: application/json
+
+###
+
+PUT  http://localhost:3000/cards/text/likes
+Content-Type: application/json
+
+###
+POST http://localhost:3000/signin
+Content-Type: application/json
