@@ -12,9 +12,9 @@ const { login, createUser, logout } = require('../controllers/user');
 
 indexRouter.post('/signup', createUserValidation, createUser);
 indexRouter.post('/signin', loginValidation, login);
-indexRouter.post('/signout', logout);
+indexRouter.get('/signout', logout);
 
-userRouter.use(auth);
+indexRouter.use(auth);
 
 indexRouter.use('/users', userRouter);
 indexRouter.use('/movies', movieRouter);

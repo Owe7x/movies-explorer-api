@@ -1,14 +1,26 @@
-GET http://localhost:3000/me
+GET http://localhost:3000/movies
 Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/signin
+POST http://localhost:3000/movies
 Content-Type: application/json
 
 {
-  "email": "tengia@mail.ru",
-  "password": "1234"
+
+  "country": "Russia",
+  "director": "Станиславский",
+  "duration": "1234",
+  "year": "1234",
+  "description": "Описание",
+  "image": "https://media.filmz.ru/photos/full/filmz.ru_f_214600.jpg",
+  "trailerLink": "https://media.filmz.ru/photos/full/filmz.ru_f_214600.jpg",
+  "thumbnail": "https://media.filmz.ru/photos/full/filmz.ru_f_214600.jpg",
+  "owner": "1234",
+  "movieId": "1234",
+  "nameRU": "Марсианин",
+  "nameEN": "Марсианин",
+
 }
 
 ###

@@ -29,7 +29,7 @@ exports.validateMovieCreate = celebrate({
     year: Joi.string().required(),
     description: Joi.string().required(),
     image: Joi.string().required().custom(urlValidation),
-    trailer: Joi.string().required().custom(urlValidation),
+    trailerLink: Joi.string().required().custom(urlValidation),
     thumbnail: Joi.string().required().custom(urlValidation),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
@@ -46,7 +46,9 @@ exports.createUserValidation = celebrate({
 });
 exports.loginValidation = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
+    email: Joi.string().required().email()
+      .message('Hекорректные имя пользователя или email'),
+    password: Joi.string().required().min(3)
+      .message('Hекорректные имя пользователя или email'),
   }),
 });

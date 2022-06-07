@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
@@ -17,14 +18,15 @@ const app = express();
 
 mongoose.connect(DATABSE);
 
-app.use(express.json());
 app.use(requestLogger);
-app.use(helmet());
-app.use(cors);
 app.use(limiter);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(helmet());
 
-app.use('/', indexRouter);
+app.use(cors);
+app.use(indexRouter);
 
 app.use(errorLogger);
 

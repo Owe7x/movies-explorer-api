@@ -6,7 +6,6 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const BadRequestError = require('../errors/BadRequestError');
-const Unauthorized = require('../errors/Unauthorized');
 
 module.exports.createUser = (req, res, next) => {
   const {
@@ -64,41 +63,44 @@ module.exports.updateProfileUser = (req, res, next) => {
 
   User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
     .orFail(() => {
-      throw new NotFoundError('Переданы некорректные данные');
+      throw new NotFoundError('Пользователь не найден');
     })
-    .then((user) => {
-      if (!user) {
-        next(new BadRequestError('Переданы некорректные данные'));
-      }
-      res.status(200).send({ user });
-    })
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные'));
+      if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким e-mail уже существует'));
+      } else if (err.name === 'ValidationError') {
+        next(new BadRequestError('Переданы некорректные данные!'));
+      } else if (err.name === 'CastError') {
+        next(new BadRequestError('Переданы некорректные данные!'));
+      } else {
+        next(err);
       }
-      next(err);
-    });
+      throw err;
+    })
+    .catch(next);
 };
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  if (!email || !password) {
-    next(new BadRequestError('Требуется ввести почту и пароль'));
-  }
   User.findUserByCredentials(email, password)
     .then((user) => {
-      // создадим токен
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key', { expiresIn: '7d' });
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: true,
-      });
-      return res.status(200).send({ token });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
+        { expiresIn: '7d' },
+      );
+      return res
+        .cookie('token', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+          sameSite: 'None',
+          secure: true,
+        })
+        .status(200)
+        .send({ token });
     })
-    .catch(() => {
-      next(new Unauthorized('Не правильный логин или пароль'));
-    });
+    .catch(next);
 };
 
 module.exports.logout = (req, res) => {
