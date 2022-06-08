@@ -1,0 +1,51 @@
+GET http://localhost:3000/movies
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+
+  "country": "Russia",
+  "director": "Станиславский",
+  "duration": "1234",
+  "year": "1234",
+  "description": "Описание",
+  "image": "https://media.filmz.ru/photos/full/filmz.ru_f_214600.jpg",
+  "trailerLink": "https://media.filmz.ru/photos/full/filmz.ru_f_214600.jpg",
+  "thumbnail": "https://media.filmz.ru/photos/full/filmz.ru_f_214600.jpg",
+  "owner": "1234",
+  "movieId": "1234",
+  "nameRU": "Марсианин",
+  "nameEN": "Марсианин",
+
+}
+
+###
+
+PATCH  http://localhost:3000/users/me
+Content-Type: application/json
+
+  {
+    "_id": "6250876c4a92cdc319444c79",
+    "name": "Tимур",
+    "about": "Me about",
+    "avatar": "https://www.zvezdi.rasdasd6334_mjettju-makkonahi-34.jpg",
+    "__v": 0
+  }
+
+###
+
+DELETE  http://localhost:3000/cards/text/likes
+Content-Type: application/json
+
+###
+
+PUT  http://localhost:3000/cards/text/likes
+Content-Type: application/json
+
+###
+POST http://localhost:3000/signin
+Content-Type: application/json
